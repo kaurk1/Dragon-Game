@@ -14,7 +14,7 @@ import org.wiremock.spring.EnableWireMock;
 public abstract class IntegrationTestBase {
 
     @LocalServerPort
-    private int port;
+    private Integer port;
 
     protected RestClient restClient;
 

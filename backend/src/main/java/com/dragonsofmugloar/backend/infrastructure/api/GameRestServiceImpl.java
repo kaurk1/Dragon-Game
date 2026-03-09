@@ -77,9 +77,9 @@ public class GameRestServiceImpl implements GameRestService {
     }
 
     @Override
-    public PurchaseResult purchaseItem(String gameId, String itemId) {
+    public Purchase purchaseItem(String gameId, String itemId) {
         var purchaseResult = clientService.purchaseItem(gameId, itemId);
-        return PurchaseResult.builder()
+        return Purchase.builder()
                 .shoppingSuccess(purchaseResult.getShoppingSuccess())
                 .gold(purchaseResult.getGold())
                 .lives(purchaseResult.getLives())

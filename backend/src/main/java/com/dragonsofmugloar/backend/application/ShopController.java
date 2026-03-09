@@ -1,6 +1,6 @@
 package com.dragonsofmugloar.backend.application;
 
-import com.dragonsofmugloar.backend.domain.model.PurchaseResult;
+import com.dragonsofmugloar.backend.domain.model.Purchase;
 import com.dragonsofmugloar.backend.domain.model.ShopItem;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +24,7 @@ public class ShopController {
     }
 
     @PostMapping("/{gameId}/shop/buy/{itemId}")
-    public PurchaseResult purchaseItem(@PathVariable String gameId, @PathVariable String itemId) {
+    public Purchase purchaseItem(@PathVariable String gameId, @PathVariable String itemId) {
         var result = gameService.purchaseItem(gameId, itemId);
         log.info("Purchase item {} for game {}: success={}", itemId, gameId, result.getShoppingSuccess());
         return result;

@@ -16,5 +16,5 @@ public interface GameRestService {
 
     List<ShopItem> getShopItems(String gameId);
 
-    PurchaseResult purchaseItem(String gameId, String itemId);
+    Purchase purchaseItem(String gameId, String itemId);
 }

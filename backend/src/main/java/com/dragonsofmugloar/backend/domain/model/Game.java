@@ -17,4 +17,5 @@ public class Game {
     private Integer score;
     private Integer highScore;
     private Integer turn;
+    private Boolean reachedTarget;
 }

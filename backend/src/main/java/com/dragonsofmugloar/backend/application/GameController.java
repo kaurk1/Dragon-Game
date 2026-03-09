@@ -3,9 +3,8 @@ package com.dragonsofmugloar.backend.application;
 import com.dragonsofmugloar.backend.domain.model.Game;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @Log4j2
 @RestController
@@ -17,8 +16,11 @@ public class GameController {
 
     @PostMapping("/start")
     public Game startGame() {
-        var result = gameService.startGame();
-        log.info("New game started: " + result);
-        return result;
+        return gameService.startGame();
+    }
+
+    @PostMapping("/play")
+    public Game playGame(@RequestParam(defaultValue = "5000") Integer targetScore) {
+        return gameService.playGame(targetScore);
     }
 }

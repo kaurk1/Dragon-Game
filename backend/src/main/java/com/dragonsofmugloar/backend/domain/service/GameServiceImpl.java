@@ -12,6 +12,7 @@ import java.util.List;
 public class GameServiceImpl implements GameService {
 
     private final GameRestService gameRestService;
+    private final GameStrategyService gameStrategyService;
 
     @Override
     public Game startGame() {
@@ -39,7 +40,12 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public PurchaseResult purchaseItem(String gameId, String itemId) {
+    public Purchase purchaseItem(String gameId, String itemId) {
         return gameRestService.purchaseItem(gameId, itemId);
+    }
+
+    @Override
+    public Game playGame(Integer targetScore) {
+        return gameStrategyService.playGame(targetScore);
     }
 }

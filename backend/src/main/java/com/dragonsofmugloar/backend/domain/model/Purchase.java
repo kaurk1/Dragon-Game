@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PurchaseResult {
+public class Purchase {
     private Boolean shoppingSuccess;
     private Integer gold;
     private Integer lives;

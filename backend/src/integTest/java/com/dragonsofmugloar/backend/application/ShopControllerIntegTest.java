@@ -1,7 +1,6 @@
 package com.dragonsofmugloar.backend.application;
 
 import com.dragonsofmugloar.backend.IntegrationTestBase;
-import com.dragonsofmugloar.backend.domain.model.PurchaseResult;
 import com.dragonsofmugloar.backend.domain.model.ShopItem;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import org.junit.jupiter.api.Test;
