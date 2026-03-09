@@ -5,3 +5,6 @@ spring:
 game:
   api:
     base-url: https://dragonsofmugloar.com/api/v2
+
+cors:
+  allowed-origins: http://localhost:4200
