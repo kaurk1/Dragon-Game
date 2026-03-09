@@ -1,17 +1,30 @@
 package com.dragonsofmugloar.backend.application;
 
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.Objects;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GlobalExceptionHandlerTest {
 
     private final GlobalExceptionHandler handler = new GlobalExceptionHandler();
+
+    @Test
+    void shouldReturn400WhenValidationFails() {
+        var ex = new ConstraintViolationException("targetScore must be at least 1", Set.of());
+
+        var response = handler.handleConstraintViolationException(ex);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(Objects.requireNonNull(response.getBody()).getStatus()).isEqualTo(400);
+        assertThat(response.getBody().getMessage()).isEqualTo("targetScore must be at least 1");
+    }
 
     @Test
     void shouldReturn404WhenExternalApiReturnsNotFound() {
