@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: backend
+
+game:
+  api:
+    base-url: https://dragonsofmugloar.com/api/v2

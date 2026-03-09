@@ -1,0 +1,73 @@
+plugins {
+	id 'java'
+	id 'idea'
+	id 'org.springframework.boot' version '4.0.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.dragonsofmugloar'
+version = '0.0.1-SNAPSHOT'
+description = 'Program to play dragonsofmugloar '
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+sourceSets {
+	integTest {
+		java.srcDir 'src/integTest/java'
+		compileClasspath += sourceSets.main.output
+		runtimeClasspath += sourceSets.main.output
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.tngtech.archunit:archunit-junit5:1.4.1'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	integTestImplementation 'org.springframework.boot:spring-boot-starter-test'
+	integTestImplementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	integTestImplementation 'org.springframework.boot:spring-boot-starter-validation'
+	integTestImplementation 'org.wiremock.integrations:wiremock-spring-boot:3.2.0'
+	integTestRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	failFast = true
+	useJUnitPlatform()
+}
+
+idea {
+	module {
+		testSources.from(sourceSets.integTest.java.srcDirs)
+		testResources.from(sourceSets.integTest.resources.srcDirs)
+	}
+}
+
+tasks.register('integrationTest', Test) {
+	testClassesDirs = sourceSets.integTest.output.classesDirs
+	classpath = sourceSets.integTest.runtimeClasspath
+	failFast = true
+	useJUnitPlatform()
+	systemProperties System.properties
+}
