@@ -15,8 +15,6 @@ public class ReputationController {
 
     @PostMapping("/{gameId}/reputation")
     public Reputation investigateReputation(@PathVariable String gameId) {
-        var result = gameService.investigateReputation(gameId);
-        log.info("Reputation for game {}: {}", gameId, result);
-        return result;
+        return gameService.investigateReputation(gameId);
     }
 }

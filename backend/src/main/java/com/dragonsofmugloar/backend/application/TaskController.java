@@ -18,15 +18,11 @@ public class TaskController {
 
     @GetMapping("/{gameId}/messages")
     public List<Task> getMessages(@PathVariable String gameId) {
-        var result = gameService.getAvailableTasks(gameId);
-        log.info("Retrieved {} messages for game {}", result.size(), gameId);
-        return result;
+        return gameService.getAvailableTasks(gameId);
     }
 
     @PostMapping("/{gameId}/solve/{adId}")
     public TaskResult solveTask(@PathVariable String gameId, @PathVariable String adId) {
-        var result = gameService.solveTask(gameId, adId);
-        log.info("Solved task {} for game {}: success={}", adId, gameId, result.getSuccess());
-        return result;
+        return gameService.solveTask(gameId, adId);
     }
 }

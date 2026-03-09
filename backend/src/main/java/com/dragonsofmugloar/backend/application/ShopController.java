@@ -18,15 +18,11 @@ public class ShopController {
 
     @GetMapping("/{gameId}/shop")
     public List<ShopItem> getShopItems(@PathVariable String gameId) {
-        var result = gameService.getShopItems(gameId);
-        log.info("Retrieved {} shop items for game {}", result.size(), gameId);
-        return result;
+        return gameService.getShopItems(gameId);
     }
 
     @PostMapping("/{gameId}/shop/buy/{itemId}")
     public Purchase purchaseItem(@PathVariable String gameId, @PathVariable String itemId) {
-        var result = gameService.purchaseItem(gameId, itemId);
-        log.info("Purchase item {} for game {}: success={}", itemId, gameId, result.getShoppingSuccess());
-        return result;
+        return gameService.purchaseItem(gameId, itemId);
     }
 }
