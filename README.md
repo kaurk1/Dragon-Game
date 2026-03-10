@@ -41,7 +41,7 @@ Open `http://localhost:4200` in your browser.
 
 ### AI Mode
 1. Click **AI Play** on the home screen
-2. Enter a target score (default 5000)
+2. Enter a target score (default 1000)
 3. Click **Play Game** and wait for the result
 
 ### Manual Mode
