@@ -1,0 +1,77 @@
+<div class="page">
+  <header class="header">
+    <button class="btn-back" (click)="goHome()">&#8592; Home</button>
+    <div>
+      <h1 class="gradient-text">Dragons of Mugloar</h1>
+      <p class="subtitle">Send your dragon on a quest</p>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="controls card">
+      <label class="field">
+        <span class="label-text">Target Score</span>
+        <input
+          type="number"
+          [value]="targetScore()"
+          (input)="updateTargetScore($any($event.target).value)"
+          min="1"
+          class="input"
+          [disabled]="loading()"
+        />
+      </label>
+
+      <button
+        class="btn-play"
+        (click)="playGame()"
+        [disabled]="loading() || targetScore() < 1"
+      >
+        @if (loading()) {
+          <span class="spinner"></span>
+          Playing…
+        } @else {
+          Play Game
+        }
+      </button>
+    </section>
+
+    @if (errorMessage()) {
+      <section class="error-card card">
+        <span class="error-icon">&#9888;</span>
+        {{ errorMessage() }}
+      </section>
+    }
+
+    @if (result(); as r) {
+      <section class="result card">
+        <div class="result-status" [class.reached]="r.reachedTarget" [class.not-reached]="!r.reachedTarget">
+          {{ r.reachedTarget ? '🏆 Target reached!' : '💀 Target not reached' }}
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">Score</span>
+            <span class="stat-value">{{ r.score }}</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Lives</span>
+            <span class="stat-value">{{ r.lives }}</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Gold</span>
+            <span class="stat-value">{{ r.gold }}</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Turns</span>
+            <span class="stat-value">{{ r.turn }}</span>
+          </div>
+        </div>
+
+        <div class="game-id">
+          <span class="stat-label">Game ID</span>
+          <span class="game-id-value">{{ r.gameId }}</span>
+        </div>
+      </section>
+    }
+  </main>
+</div>

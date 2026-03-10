@@ -1,0 +1,86 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+// Design tokens
+:root {
+  --color-gold:            #f0a500;
+  --color-red:             #e94560;
+  --color-green:           #2ed573;
+  --color-text:            #e0e0e0;
+  --color-muted:           #a0a0b0;
+  --color-surface:         rgba(255, 255, 255, 0.05);
+  --color-border:          rgba(255, 255, 255, 0.1);
+  --bg-gradient:           linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --accent-gradient:       linear-gradient(90deg, #f0a500, #e94560);
+  --font-base:             'Segoe UI', system-ui, sans-serif;
+}
+
+// Shared page shell
+.page {
+  min-height: 100vh;
+  background: var(--bg-gradient);
+  color: var(--color-text);
+  font-family: var(--font-base), sans-serif;
+}
+
+// Gradient heading
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Back button
+.btn-back {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: var(--color-muted);
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--color-text);
+  }
+}
+
+// Spinner
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+  flex-shrink: 0;
+
+  &.sm {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// Error card
+.error-card {
+  background: rgba(233, 69, 96, 0.1);
+  border: 1px solid rgba(233, 69, 96, 0.4);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #f08090;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,117 @@
+<div class="page">
+  <header class="header">
+    <button class="btn-back" (click)="goHome()">&#8592; Home</button>
+    <h1 class="gradient-text">Manual Play</h1>
+  </header>
+
+  @if (!game() && loading()) {
+    <div class="start-section">
+      <span class="spinner"></span> Starting game…
+    </div>
+  }
+
+  @if (!game() && error()) {
+    <div class="error-card">&#9888; {{ error() }}
+      <button class="btn-primary" (click)="startGame()">Retry</button>
+    </div>
+  }
+
+  @if (game(); as g) {
+    <div class="stats-bar">
+      <div class="stat"><span class="stat-label">❤️ Lives</span><span class="stat-val">{{ g.lives }}</span></div>
+      <div class="stat"><span class="stat-label">💰 Gold</span><span class="stat-val">{{ g.gold }}</span></div>
+      <div class="stat"><span class="stat-label">⭐ Score</span><span class="stat-val">{{ g.score }}</span></div>
+      <div class="stat"><span class="stat-label">🔄 Turn</span><span class="stat-val">{{ g.turn }}</span></div>
+      <div class="stat"><span class="stat-label">🏆 Best</span><span class="stat-val">{{ g.highScore }}</span></div>
+    </div>
+
+    @if (gameOver()) {
+      <div class="game-over-card">
+        <div class="game-over-title">💀 Game Over</div>
+        <div class="game-over-score">Final score: {{ g.score }}</div>
+        <button class="btn-action" (click)="startGame()">Play Again</button>
+      </div>
+    } @else {
+      @if (lastResult(); as res) {
+        @if (res.type === 'quest') {
+          <div class="result-toast" [class.success]="res.data.success" [class.failure]="!res.data.success">
+            {{ res.data.success ? '✅' : '❌' }} {{ res.data.message }}
+          </div>
+        } @else {
+          <div class="result-toast" [class.success]="res.data.shoppingSuccess" [class.failure]="!res.data.shoppingSuccess">
+            {{ res.data.shoppingSuccess ? '✅ Purchase successful!' : '❌ Purchase failed' }}
+          </div>
+        }
+      }
+
+      @if (error()) {
+        <div class="error-card">&#9888; {{ error() }}</div>
+      }
+
+      <div class="tabs">
+        <button class="tab" [class.active]="activeTab() === 'quests'" (click)="setTab('quests')">
+          ⚔️ Quests
+        </button>
+        <button class="tab" [class.active]="activeTab() === 'shop'" (click)="setTab('shop')">
+          🛒 Shop
+        </button>
+      </div>
+
+      @if (activeTab() === 'quests') {
+        <div class="list">
+          @for (quest of quests(); track quest.adId) {
+            <div class="list-card">
+              <div class="list-card-main">
+                <div class="quest-message">{{ quest.message }}</div>
+                <div class="quest-meta">
+                  <span class="badge" [class]="probabilityClass(quest.probability)">{{ quest.probability }}</span>
+                  <span class="meta-item">💰 {{ quest.reward }}</span>
+                  <span class="meta-item">⏳ {{ quest.expiresIn }} turns</span>
+                </div>
+              </div>
+              <button
+                class="btn-action"
+                (click)="takeQuest(quest.adId)"
+                [disabled]="actionLoading() !== null"
+              >
+                @if (actionLoading() === quest.adId) {
+                  <span class="spinner sm"></span>
+                } @else {
+                  Go
+                }
+              </button>
+            </div>
+          } @empty {
+            <div class="empty">No quests available.</div>
+          }
+        </div>
+      }
+
+      @if (activeTab() === 'shop') {
+        <div class="list">
+          @for (item of shopItems(); track item.id) {
+            <div class="list-card">
+              <div class="list-card-main">
+                <div class="item-name">{{ item.name }}</div>
+                <div class="item-cost">💰 {{ item.cost }} gold</div>
+              </div>
+              <button
+                class="btn-action"
+                (click)="buyItem(item.id)"
+                [disabled]="actionLoading() !== null || g.gold < item.cost"
+              >
+                @if (actionLoading() === item.id) {
+                  <span class="spinner sm"></span>
+                } @else {
+                  Buy
+                }
+              </button>
+            </div>
+          } @empty {
+            <div class="empty">Shop is empty.</div>
+          }
+        </div>
+      }
+    }
+  }
+</div>
