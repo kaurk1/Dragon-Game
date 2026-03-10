@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit } from '@angular/core';
+import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GameService } from '../../services/game.service';
@@ -12,6 +12,7 @@ import {
 } from "../../models/game.model";
 
 type Tab = 'quests' | 'shop';
+type SortBy = 'reward' | 'probability';
 type ActionResult = { type: 'quest'; data: QuestResult } | { type: 'purchase'; data: Purchase };
 
 @Component({
@@ -27,11 +28,19 @@ export class ManualPlayComponent implements OnInit {
   quests = signal<Quest[]>([]);
   shopItems = signal<ShopItem[]>([]);
   activeTab = signal<Tab>('quests');
+  sortBy = signal<SortBy>('reward');
   loading = signal(false);
   actionLoading = signal<string | null>(null);
   lastResult = signal<ActionResult | null>(null);
   error = signal<string | null>(null);
   gameOver = signal(false);
+
+  sortedQuests = computed(() => {
+    const quests = this.quests();
+    return this.sortBy() === 'reward'
+      ? [...quests].sort((a, b) => b.reward - a.reward)
+      : [...quests].sort((a, b) => (this.probabilityRank[a.probability] ?? 5) - (this.probabilityRank[b.probability] ?? 5));
+  });
 
   ngOnInit(): void {
     this.startGame();

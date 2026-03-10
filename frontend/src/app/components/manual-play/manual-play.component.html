@@ -58,8 +58,13 @@
       </div>
 
       @if (activeTab() === 'quests') {
+        <div class="sort-toggle">
+          <span class="sort-label">Sort by</span>
+          <button class="sort-btn" [class.active]="sortBy() === 'reward'" (click)="sortBy.set('reward')">💰 Reward</button>
+          <button class="sort-btn" [class.active]="sortBy() === 'probability'" (click)="sortBy.set('probability')">🎯 Probability</button>
+        </div>
         <div class="list">
-          @for (quest of quests(); track quest.adId) {
+          @for (quest of sortedQuests(); track quest.adId) {
             <div class="list-card">
               <div class="list-card-main">
                 <div class="quest-message">{{ quest.message }}</div>
