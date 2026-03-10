@@ -39,6 +39,7 @@ export class ManualPlayComponent implements OnInit {
 
   startGame(): void {
     this.loading.set(true);
+    this.resetGameStats();
 
     this.gameService.startGame().subscribe({
       next: (game) => {
@@ -52,6 +53,15 @@ export class ManualPlayComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  resetGameStats(): void {
+    this.game.set(null);
+    this.gameOver.set(false);
+    this.quests.set([]);
+    this.shopItems.set([]);
+    this.lastResult.set(null);
+    this.error.set(null);
   }
 
   loadQuests(gameId: string): void {
@@ -102,6 +112,7 @@ loadShop(gameId: string): void {
         this.updateGame({ gold: result.gold, lives: result.lives, level: result.level, turn: result.turn });
         this.actionLoading.set(null);
         this.loadShop(game.gameId);
+        this.loadQuests(game.gameId);
       },
       error: (err: HttpErrorResponse) => {
         this.error.set(err.error?.message ?? 'Failed to buy item.');
@@ -135,9 +146,10 @@ loadShop(gameId: string): void {
     'Quite likely':       4,
     'Hmmm....':           5,
     'Risky':              6,
-    'Rather detrimental': 7,
-    'Suicide mission':    8,
-    'Impossible':         9,
+    'Playing with fire':  7,
+    'Rather detrimental': 8,
+    'Suicide mission':    9,
+    'Impossible':         10,
   };
 
   probabilityClass(prob: string): string {

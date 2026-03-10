@@ -20,9 +20,10 @@ public class TaskSelectionStrategy {
             "Quite likely",       4,
             "Hmmm....",           5,
             "Risky",              6,
-            "Rather detrimental", 7,
-            "Suicide mission",    8,
-            "Impossible",         9
+            "Playing with fire",  7,
+            "Rather detrimental", 8,
+            "Suicide mission",    9,
+            "Impossible",         10
     );
 
     public static Optional<Task> selectBestTask(List<Task> tasks) {
